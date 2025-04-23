@@ -46,8 +46,11 @@ public class PlayerMovement : MonoBehaviour
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb!=null){
                 rb.velocity= Vector3.zero;
-                rb.angularVelocity= Vector3.zero;    
+                rb.angularVelocity= Vector3.zero;  
+                Debug.Log("Zero");  
             }
+            //speed=0f;
+            velocity=Vector3.zero;
             transform.position = respawn.transform.position;
         muerte=false;
         }
