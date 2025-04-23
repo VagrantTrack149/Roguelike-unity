@@ -15,8 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
     public float gravity = -9.81f;
     private Vector3 velocity;
-
-
+    public bool muerte;
+    public GameObject respawn;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -41,5 +41,9 @@ public class PlayerMovement : MonoBehaviour
         }
         velocity.y+= gravity*Time.deltaTime;
         controller.Move(velocity*Time.deltaTime);
+        if (muerte){
+            transform.position = respawn.transform.position;
+            muerte=false;
+        }
     }
 }

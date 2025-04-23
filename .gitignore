@@ -1,3 +1,9 @@
-.vscode/
+.gitignore
+Assembly-CSharp.csproj
+Library/
+Logs/
+ProjectSettings/
+Roguelike.sln
+Temp/
+UserSettings/
 Packages/
-Assembly-CSharp.CSharp
