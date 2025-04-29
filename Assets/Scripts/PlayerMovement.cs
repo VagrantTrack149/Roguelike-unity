@@ -17,10 +17,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     public bool muerte=false;
     public GameObject respawn;
+    private Rigidbody rb;
     
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        rb= GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -43,17 +45,25 @@ public class PlayerMovement : MonoBehaviour
         velocity.y+= gravity*Time.deltaTime;
         controller.Move(velocity*Time.deltaTime);
         if (muerte){
-            Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb!=null){
-                rb.velocity= Vector3.zero;
-                rb.angularVelocity= Vector3.zero;  
-                Debug.Log("Zero");  
-            }
-            //speed=0f;
-            velocity=Vector3.zero;
-            transform.position = respawn.transform.position;
-        muerte=false;
+            
+           HandleRespawn();
+            return; 
         }
-        
     }
+
+    private void HandleRespawn(){
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+            speed = 0f;
+            velocity = Vector3.zero;
+            controller.enabled = false; 
+            transform.position = respawn.transform.position;
+            controller.enabled = true; 
+            speed = 10;
+            muerte = false;
+        }
 }
+

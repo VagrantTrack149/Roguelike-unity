@@ -135,6 +135,8 @@ MonoBehaviour:
   agente: {fileID: 4891986718533203290}
   distancia_ataque: 0
   radio_vision: 10
+  radio_vision_visto: 16
+  visto: 0
 --- !u!195 &4891986718533203290
 NavMeshAgent:
   m_ObjectHideFlags: 0

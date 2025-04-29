@@ -10,6 +10,7 @@ public class Trap : MonoBehaviour
     void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player")){
             PlayerMovement.muerte=true;
+            Debug.Log("Entrar");
         }
         if (other.CompareTag("Enemy")){
             Destroy(other.gameObject);  
