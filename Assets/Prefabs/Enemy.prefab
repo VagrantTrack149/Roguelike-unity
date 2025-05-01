@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7663870916776017575}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1342610cc31e73740bcb322d30dbf22e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,10 +109,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.5114293
+  m_Height: 2.407994
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -0.01142931, y: -0.16659462, z: 0}
 --- !u!114 &6190872592356615174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   angulo: {x: 0, y: 0, z: 0, w: 0}
   grado: 0
   vel_caminar: 3
-  vel_correr: 5
+  vel_correr: 8
   target: {fileID: 0}
   agente: {fileID: 4891986718533203290}
   distancia_ataque: 0
@@ -147,11 +147,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 12
   m_Acceleration: 12
   avoidancePriority: 50
-  m_AngularSpeed: 160
-  m_StoppingDistance: 0
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -250,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f2611631a22e73243b0ffee876699714, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

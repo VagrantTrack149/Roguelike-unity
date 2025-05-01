@@ -69,9 +69,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void HandleRespawn(){
-            if (rb != null)
-            {
+    public void HandleRespawn(){
+            if (rb != null){
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }

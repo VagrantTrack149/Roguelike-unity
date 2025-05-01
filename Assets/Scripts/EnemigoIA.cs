@@ -27,7 +27,12 @@ public class EnemigoIA : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mirar_player();
+        target=GameObject.FindGameObjectWithTag("Player");
+        if (target==null){
+            Comportamiendo_ene(3,vel_caminar);
+        }else{
+            mirar_player();
+        }
     }
     public void mirar_player(){
         if (visto){
