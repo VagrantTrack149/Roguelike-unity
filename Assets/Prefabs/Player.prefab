@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 7990495145456117836}
   - component: {fileID: 8332240212085962884}
   - component: {fileID: 6378436705865270437}
+  - component: {fileID: 5971214582550050136}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -308,6 +309,28 @@ MonoBehaviour:
   ray: {fileID: 1276984890523228464, guid: 8b3623e2c69cf8745bb77c7da887251b, type: 3}
   player: {fileID: 2619122859165760462}
   offsetDistance: 2
+  trans: 0
+  rm: {fileID: 0}
+  modelo: {fileID: 0}
+  enemigo: {fileID: 0}
+--- !u!114 &5971214582550050136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2619122859165760462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba10c1aa7cc752049a239d3a4485cd34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0
+  f: 0
+  gg: {fileID: 5723473335666512604}
+  render: {fileID: 0}
+  mat: {fileID: 0}
+  col: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &7050602647277237995
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,5 +617,10 @@ PrefabInstance:
 --- !u!4 &4575479958642707096 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 229aa3005f149b243911c0fb9e7d18ef, type: 3}
+  m_PrefabInstance: {fileID: 4104441424511774067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5723473335666512604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8617702853063917487, guid: 229aa3005f149b243911c0fb9e7d18ef, type: 3}
   m_PrefabInstance: {fileID: 4104441424511774067}
   m_PrefabAsset: {fileID: 0}

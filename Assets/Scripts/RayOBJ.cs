@@ -16,6 +16,7 @@ public class RayOBJ : MonoBehaviour
     public Rigidbody rb;
     public NavMeshAgent agent;
     public RayController ray;
+    public Transform enemigo_position;
 
     // Start is called before the first frame update
     void Start()
@@ -44,37 +45,45 @@ public class RayOBJ : MonoBehaviour
         }
         Destroy(gameObject);
     }*/
+
+    void menso(){
+        if (enemigo != null){
+            enemigo.tag = "Poseido";
+            ia = enemigo.GetComponent<EnemigoIA>();
+            rb = enemigo.GetComponent<Rigidbody>();
+            agent = enemigo.GetComponent<NavMeshAgent>();
+            
+            if (rb != null){
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                Destroy(rb);
+            }
+        //Vector3 playerOriginalPosition = player.transform.position;
+        Quaternion playerOriginalRotation = player.transform.rotation;
+
+        player.transform.position = enemigo.transform.position;
+        enemigo.transform.rotation=playerOriginalRotation;
+        player.tag = "Enemy"; 
+        agent.enabled = false;
+        ia.enabled = false;
+        modelo.SetActive(false);
+        enemigo.transform.parent=player.transform;
+        }
+        ray.trans = true;
+    }
+
+    
+
     void OnCollisionEnter(Collision other) {
         
          if (other.gameObject.CompareTag("Enemy")){
             Debug.Log("Muerte");
             //rm.HandleRespawn();
-            player.transform.position=other.transform.position;
+            //player.transform.position=other.transform.position;
+            enemigo_position=other.transform;
             enemigo=other.gameObject;
             menso();
             Destroy(gameObject);
         }
     }
-    public void menso(){
-        if (enemigo!=null){
-            enemigo.tag="Poseido";
-            ia=enemigo.GetComponent<EnemigoIA>();
-            rb=enemigo.GetComponent<Rigidbody>();
-            agent=enemigo.GetComponent<NavMeshAgent>();
-            if (rb != null){
-                rb.velocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-            }
-            Destroy(rb);
-            agent.enabled = false;
-            ia.enabled=false;
-            modelo.SetActive(false);
-            player.transform.position=enemigo.transform.position;
-            enemigo.transform.rotation=player.transform.rotation;
-            enemigo.transform.parent=player.transform;
-            player.tag="Enemy"; 
-        }
-        ray.trans=true;
-    }
-    
 }
