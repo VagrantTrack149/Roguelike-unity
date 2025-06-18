@@ -22,11 +22,12 @@ public class PlayerMovement : MonoBehaviour
     public GameObject respawn;
     private Rigidbody rb;
     public float count;
-    
+    public Vida_Jugador Vida;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        rb= GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        Vida=GetComponent<Vida_Jugador>();
     }
 
     // Update is called once per frame
@@ -69,18 +70,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void HandleRespawn(){
-            if (rb != null){
-                rb.velocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-            }
-            speed = 0f;
-            velocity = Vector3.zero;
-            controller.enabled = false; 
-            transform.position = respawn.transform.position;
-            controller.enabled = true; 
-            speed = 10;
-            muerte = false;
+    public void HandleRespawn()
+    {
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
+        speed = 0f;
+        velocity = Vector3.zero;
+        controller.enabled = false;
+        transform.position = respawn.transform.position;
+        controller.enabled = true;
+        speed = 10;
+        muerte = false;
+        Vida.VidaActual = 10;
+    }
 }
 
