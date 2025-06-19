@@ -1,0 +1,7 @@
+{
+    "mensajes": [
+        {"mensaje": "Este es el primer mensaje"},
+        {"mensaje": "Este es el segundo mensaje"},
+        {"mensaje": "Este es el tercer mensaje"}
+    ]
+}
