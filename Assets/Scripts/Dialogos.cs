@@ -3,7 +3,7 @@ using TMPro;
 
 public class Dialogos : MonoBehaviour
 {
-    public bool Platica = false;
+    public bool Platica = false, Platica_Stil=false;
     public JSONReader json;
     public TMP_Text textMeshProComponent; // Referencia asignada desde el Inspector
     public GameObject Panel_Texto;
@@ -18,18 +18,22 @@ public class Dialogos : MonoBehaviour
             textMeshProComponent = hijo.GetComponent<TextMeshProUGUI>();
         }
         Panel_Texto.SetActive(false);
-        
+
         json = GetComponent<JSONReader>();
     }
 
     void Update()
     {
-        if (Platica && json.jsonCargado){
-            if (Input.GetKeyDown(KeyCode.Space)){
+        if (Platica && json.jsonCargado)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Panel_Texto.SetActive(Platica);
                 string texto = json.MostrarSiguienteMensaje();
-                
+                textMeshProComponent.text = "...";
                 // Asignar el texto al componente TextMeshPro
-                if(texto != null && textMeshProComponent != null){
+                if (texto != null && textMeshProComponent != null)
+                {
                     textMeshProComponent.text = texto;
                 }
                 else
@@ -37,23 +41,38 @@ public class Dialogos : MonoBehaviour
                     // Finalizar diálogo
                     Platica = false;
                     Panel_Texto.SetActive(Platica);
+                    json.ReiniciarMensajes();
                     textMeshProComponent.text = "";
+                    if (Platica_Stil ){
+                        Platica = true;
+                        json.CargarJSON(); 
+                    }
                 }
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Player")
         {
             Platica = true;
-            Panel_Texto.SetActive(Platica);
-            if (Panel_Texto != null){
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Panel_Texto.SetActive(Platica);
+            }
+            if (Panel_Texto != null)
+            {
                 Transform hijo = Panel_Texto.transform.Find("Texto");
                 textMeshProComponent = hijo.GetComponent<TextMeshProUGUI>();
             }
             json.CargarJSON(); // Cargar solo al iniciar diálogo
         }
+    }
+    private void OnTriggerStay(Collider other) {
+        if (Input.GetKeyDown(KeyCode.Space)){
+            Platica_Stil = true;
+        }
+        
     }
 }
