@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     public float count;
     public Vida_Jugador Vida;
+    public bool Movement = true;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -33,41 +34,72 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal=Input.GetAxis("Horizontal");
-        float vertical=Input.GetAxis("Vertical");
-        Vector3 direction= new Vector3(horizontal, 0, vertical).normalized;
-        if (direction.magnitude >= 0.1f){
-            float targetAngle=Mathf.Atan2(direction.x,direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation=Quaternion.Euler(0f,angle,0f);
-            Vector3 moveDir=Quaternion.Euler(0f,targetAngle,0f)*Vector3.forward;
-            controller.Move(moveDir.normalized*speed*Time.deltaTime);
-            anima.SetBool("Walk",true);
-            count+=Time.deltaTime;
-                if (count>=2){
-                    if (Input.GetKeyDown(KeyCode.LeftShift)){
-                        speed=20;
+        if (Movement){
+            controller.enabled = true;
+            speed = 10;
+            muerte = false;
+            Vida.VidaActual = 10;
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+            if (direction.magnitude >= 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                anima.SetBool("Walk", true);
+                count += Time.deltaTime;
+                if (count >= 2)
+                {
+                    if (Input.GetKeyDown(KeyCode.LeftShift))
+                    {
+                        speed = 20;
                     }
-                    if (Input.GetKeyUp(KeyCode.LeftShift)){
-                        speed=10;        
+                    if (Input.GetKeyUp(KeyCode.LeftShift))
+                    {
+                        speed = 10;
                     }
-                }else{
-                speed=10;
+                }
+                else
+                {
+                    speed = 10;
+                }
             }
-        }else{
-            anima.SetBool("Walk",false);
+            else
+            {
+                anima.SetBool("Walk", false);
+            }
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            if (isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+            if (muerte)
+            {
+
+                HandleRespawn();
+                return;
+            }
         }
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-          if (isGrounded && velocity.y < 0){
-            velocity.y = -2f;
-        }
-        velocity.y+= gravity*Time.deltaTime;
-        controller.Move(velocity*Time.deltaTime);
-        if (muerte){
+        else
+        {
+            speed = 0f;
+            velocity = Vector3.zero;
+            controller.enabled = false;
+            transform.position = transform.position;
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
             
-           HandleRespawn();
-            return; 
+            Debug.Log("Bloqueado");
         }
+
     }
 
     public void HandleRespawn()

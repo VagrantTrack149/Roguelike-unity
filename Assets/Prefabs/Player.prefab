@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 2619122859165760462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.0210004, y: 1.3603373, z: 30.197697}
+  m_LocalPosition: {x: 6.0210004, y: 0, z: 30.197697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -206,6 +206,8 @@ MonoBehaviour:
   muerte: 0
   respawn: {fileID: 0}
   count: 0
+  Vida: {fileID: 0}
+  Movement: 1
 --- !u!54 &7804067355989166358
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -253,9 +255,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.6
-  m_Height: 3.3
+  m_Height: 2.6421604
   m_Direction: 1
-  m_Center: {x: 0, y: -0.36863637, z: 0}
+  m_Center: {x: 0, y: -0.039716482, z: 0}
 --- !u!114 &7990495145456117836
 MonoBehaviour:
   m_ObjectHideFlags: 0
