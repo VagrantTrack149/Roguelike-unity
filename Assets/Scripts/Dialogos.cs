@@ -1,45 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
-using TMPro; 
+using TMPro;
 
 public class Dialogos : MonoBehaviour
 {
     public bool Platica = false;
     public JSONReader json;
-    private bool jsonCargado = false;
-    public TMP_Text textMeshProComponent;
+    public TMP_Text textMeshProComponent; // Referencia asignada desde el Inspector
     public GameObject Panel_Texto;
 
-    // Start is called before the first frame update
     void Start()
     {
-        Panel_Texto=GameObject.Find("Texto");
-        textMeshProComponent = Panel_Texto.GetComponent<TextMeshProUGUI>();
+        // Asigna el componente de texto directamente desde el objeto
+        Panel_Texto = GameObject.Find("Fondo_dialogo");
+        if (Panel_Texto != null)
+        {
+            Transform hijo = Panel_Texto.transform.Find("Texto");
+            textMeshProComponent = hijo.GetComponent<TextMeshProUGUI>();
+        }
+        Panel_Texto.SetActive(false);
+        
         json = GetComponent<JSONReader>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Platica)
-        {
-            json.CargarJSON();
-            // Mostrar siguiente mensaje al presionar Espacio
-            if (Input.GetKeyDown(KeyCode.Space) && jsonCargado)
-            {
+        if (Platica && json.jsonCargado){
+            if (Input.GetKeyDown(KeyCode.Space)){
                 string texto = json.MostrarSiguienteMensaje();
-                textMeshProComponent.text = texto;
-
+                
+                // Asignar el texto al componente TextMeshPro
+                if(texto != null && textMeshProComponent != null){
+                    textMeshProComponent.text = texto;
+                }
+                else
+                {
+                    // Finalizar diálogo
+                    Platica = false;
+                    Panel_Texto.SetActive(Platica);
+                    textMeshProComponent.text = "";
+                }
             }
+        }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            Platica = true;
+            Panel_Texto.SetActive(Platica);
+            if (Panel_Texto != null){
+                Transform hijo = Panel_Texto.transform.Find("Texto");
+                textMeshProComponent = hijo.GetComponent<TextMeshProUGUI>();
+            }
+            json.CargarJSON(); // Cargar solo al iniciar diálogo
         }
     }
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.name == "Player" && Input.GetKeyDown(KeyCode.Space)){
-            Platica=true;
-        }
-    }
-    
 }

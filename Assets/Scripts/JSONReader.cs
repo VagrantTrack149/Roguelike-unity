@@ -2,99 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
-
-[System.Serializable]
-public class Mensaje
-{
-    public string mensaje;
-}
-
 [System.Serializable]
 public class MensajeList
 {
-    public List<Mensaje> mensajes;
+    public List<string> mensajes; // Cambiado a lista de strings directos
 }
 
 public class JSONReader : MonoBehaviour
 {
     public TextAsset jsonFile;
-    private List<Mensaje> listaMensajes;
+    private List<string> listaMensajes; // Lista de strings
     private int indiceActual = 0;
-    private bool jsonCargado = false;
-
-    void Start()
-    {
-        CargarJSON();
-    }
-
-    void Update()
-    {
-        // Mostrar siguiente mensaje al presionar Espacio
-        if (Input.GetKeyDown(KeyCode.Space) && jsonCargado)
-        {
-            MostrarSiguienteMensaje();
-        }
-        
-        // Opcional: Reiniciar con R
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ReiniciarMensajes();
-        }
-    }
+    public bool jsonCargado = false; // Público para acceso externo
 
     public void CargarJSON()
     {
-        if (jsonFile != null)
-        {
-            var datos = JsonUtility.FromJson<MensajeList>(jsonFile.text);
+        if (jsonFile == null || jsonCargado) return;
 
-            if (datos != null && datos.mensajes != null)
-            {
-                listaMensajes = datos.mensajes;
-                jsonCargado = true;
-                Debug.Log("JSON cargado correctamente. Presiona Espacio para comenzar.");
-            }
-            else
-            {
-                Debug.LogError("El archivo JSON no tiene la estructura esperada");
-            }
-        }
-        else
+        try
         {
-            Debug.LogError("No se ha asignado un archivo JSON");
+            MensajeList datos = JsonUtility.FromJson<MensajeList>(jsonFile.text);
+            listaMensajes = datos.mensajes;
+            jsonCargado = true;
+            Debug.Log("JSON cargado correctamente");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error cargando JSON: {e.Message}");
         }
     }
 
     public string MostrarSiguienteMensaje()
     {
+        if (!jsonCargado || listaMensajes == null) return null;
+
         if (indiceActual < listaMensajes.Count)
         {
-            string mensajeActual = listaMensajes[indiceActual].mensaje;
-
-            //Debug.Log($"Mensaje {indiceActual + 1}: {listaMensajes[indiceActual].mensaje}");
-            indiceActual++;
-            Debug.Log(mensajeActual);
-            return mensajeActual;
+            return listaMensajes[indiceActual++];
         }
-        else
-        {
-            //Debug.Log("No hay más mensajes. Presiona R para reiniciar.");
-            return null;
-        }
+        return null; // Fin de los mensajes
     }
 
     public void ReiniciarMensajes()
     {
         indiceActual = 0;
-        Debug.Log("Mensajes reiniciados. Presiona Espacio para comenzar.");
-    }
-
-    // Función pública por si necesitas llamarla desde otro script
-    public void MostrarMensajeActual()
-    {
-        if (jsonCargado && indiceActual < listaMensajes.Count)
-        {
-            Debug.Log(listaMensajes[indiceActual].mensaje);
-        }
     }
 }
