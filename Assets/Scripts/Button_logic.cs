@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Button_logic : MonoBehaviour
 {
-    public Puerta_logic Puerta_Logic;
+    public GameObject Puerta;
     public Color rojo = Color.red;
-    private Renderer rend; 
+    private Renderer rend;
+    public Puerta_logic logic;
 
-    void Start() {
+    void Start()
+    {
         rend = GetComponent<Renderer>();
+        logic=Puerta.GetComponent<Puerta_logic>();
     }
-
     void OnTriggerEnter(Collider other) {
-        Puerta_Logic.Abierto = true;
+        
+        logic.Abierto = true;
         rend.material.color = rojo; 
     }
 }

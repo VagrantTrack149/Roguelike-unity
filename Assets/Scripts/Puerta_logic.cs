@@ -5,7 +5,6 @@ using UnityEngine;
 public class Puerta_logic : MonoBehaviour
 {
     public bool Abierto=false;
-
     void Update()
     {
         if (Abierto){
