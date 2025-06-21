@@ -8,10 +8,11 @@ public class Ataque : MonoBehaviour
     public GameObject player;
     public float offsetDistance = 0.8f;
     public float count;
+    public Controles controles;
     // Start is called before the first frame update
     void Start()
     {
-        
+        controles = GameObject.Find("Controles").GetComponent<Controles>();   
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class Ataque : MonoBehaviour
         Vector3 adjustedPosition=player.transform.position+player.transform.forward * offsetDistance;
         count+= Time.deltaTime;
         if (count>=1){
-            if (Input.GetKeyDown(KeyCode.R)){
+            if (Input.GetKeyDown(controles.Attack)){
                 GameObject armaGen=Instantiate(arma, adjustedPosition, player.transform.rotation);
                 armaGen.transform.parent=player.transform;
                 count=0;

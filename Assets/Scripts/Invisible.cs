@@ -11,10 +11,11 @@ public class Invisible : MonoBehaviour
     public Material mat; //material original
     public Material mat1; //material a cambiar
     public Color col;
+    public Controles controles;
     // Start is called before the first frame update
     void Start()
     {
-        
+        controles = GameObject.Find("Controles").GetComponent<Controles>();
         render=gg.GetComponent<Renderer>();
         mat=render.material;
         //col=mat.color;
@@ -23,7 +24,7 @@ public class Invisible : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !f){
+        if (Input.GetKeyDown(controles.Invisible) && !f){
             gameObject.tag="Poseido";
             //col.a=0f;
             if (render != null && mat1 != null){

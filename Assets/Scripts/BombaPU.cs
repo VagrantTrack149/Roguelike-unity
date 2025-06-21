@@ -8,14 +8,17 @@ public class BombaPU : MonoBehaviour
     public GameObject player;
     public float count;
     public float offsetDistance = 2f;
-    void Start() {
+    public Controles controles;
+    void Start()
+    {
+        controles = GameObject.Find("Controles").GetComponent<Controles>();
     }
     void Update()
     { 
         Vector3 adjustedPosition=player.transform.position+player.transform.forward * offsetDistance;
         count+= Time.deltaTime;
         if (count>=1){
-            if (Input.GetKeyDown(KeyCode.Space)){
+            if (Input.GetKeyDown(controles.Bomb)){
                 Instantiate(bombaPrefab, adjustedPosition, player.transform.rotation);
                 count=0;
             }

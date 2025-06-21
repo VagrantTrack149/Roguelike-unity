@@ -9,8 +9,10 @@ public class Dialogos : MonoBehaviour
     public TMP_Text textMeshProComponent; // Referencia asignada desde el Inspector
     public GameObject Panel_Texto;
     public PlayerMovement playerMovement;
+    public Controles controles;
     void Start()
     {
+        controles = GameObject.Find("Controles").GetComponent<Controles>();
         // Asigna el componente de texto directamente desde el objeto
         Panel_Texto = GameObject.Find("Fondo_dialogo");
         GameObject player = GameObject.Find("Player");
@@ -30,7 +32,7 @@ public class Dialogos : MonoBehaviour
 
         if (Platica && json.jsonCargado)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(controles.Interaccion))
             {
                 playerMovement.Movement = false;
                 Panel_Texto.SetActive(Platica);
@@ -57,7 +59,7 @@ public class Dialogos : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Platica_Stil = false;
             Platica = false;
@@ -71,7 +73,7 @@ public class Dialogos : MonoBehaviour
         if (other.gameObject.name == "Player")
         {
             Platica = true;
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(controles.Interaccion))
             {
                 Panel_Texto.SetActive(Platica);
             }
@@ -85,7 +87,7 @@ public class Dialogos : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(controles.Interaccion))
         {
             Platica_Stil = true;
         }

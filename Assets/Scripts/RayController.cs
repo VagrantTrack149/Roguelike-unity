@@ -12,11 +12,13 @@ public class RayController : MonoBehaviour
     public PlayerMovement rm;
     public GameObject modelo;
     public GameObject enemigo;
+    public Controles controles;
     
     // Start is called before the first frame update
     void Start()
     {
-        player=GameObject.Find("Player");
+        controles = GameObject.Find("Controles").GetComponent<Controles>();
+        player =GameObject.Find("Player");
         rm=player.GetComponent<PlayerMovement>();
         modelo=GameObject.Find("Model");
     }
@@ -38,7 +40,7 @@ public class RayController : MonoBehaviour
     }
     void lanzar(){
         Vector3 adjustedPosition=player.transform.position+player.transform.forward * offsetDistance;
-        if (Input.GetKeyDown(KeyCode.E)){
+        if (Input.GetKeyDown(controles.Robo)){
             Instantiate(ray,adjustedPosition, player.transform.rotation);
             count=0; 
         }  
