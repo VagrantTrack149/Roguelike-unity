@@ -8,8 +8,9 @@ public class Ataque_Aux : MonoBehaviour
     public float count;
     public float fuerzaExpulsion=50;
     public GameObject player;
-    public float distanciaExpulsion = 5f; 
-    public float duracionEmpuje = 0.5f; 
+    public float distanciaExpulsion = 10f; 
+    public float duracionEmpuje = 0.5f;
+    public Vida_enemy vida_Enemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,17 +28,24 @@ public class Ataque_Aux : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         Rigidbody rb =other.GetComponent<Rigidbody>();
         if (other.CompareTag("Enemy")){
+            vida_Enemy=other.GetComponent<Vida_enemy>();
             StartCoroutine(EmpujarEnemigo(other.transform));
+            vida_Enemy.Daño(5);
         }
     }
     void OnTriggerStay(Collider other) {
          Rigidbody rb =other.GetComponent<Rigidbody>();
         if (other.CompareTag("Enemy")){
+            vida_Enemy=other.GetComponent<Vida_enemy>();
+            //vida_Enemy.Daño(5);
             StartCoroutine(EmpujarEnemigo(other.transform));
         }
     }
     IEnumerator EmpujarEnemigo(Transform enemigo)
     {
+         if (enemigo == null){
+            yield break; 
+        }
         Vector3 direccion = (enemigo.position - player.transform.position).normalized;
         //Vector3 direccion = player.transform.position;
 
@@ -46,9 +54,13 @@ public class Ataque_Aux : MonoBehaviour
 
         while (tiempoTranscurrido < duracionEmpuje)
         {
+            if (enemigo == null){
+                yield break;
+            }
             enemigo.position = Vector3.Lerp(enemigo.position, posicionFinal, tiempoTranscurrido/duracionEmpuje);
             tiempoTranscurrido += Time.deltaTime;
-            yield return null;
+            yield return null; 
+            
         }
     }
 }
