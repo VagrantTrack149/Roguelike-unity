@@ -17,6 +17,7 @@ public class RayOBJ : MonoBehaviour
     public NavMeshAgent agent;
     public RayController ray;
     public Transform enemigo_position;
+    public bool poseido = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,8 @@ public class RayOBJ : MonoBehaviour
         transform.Translate(Vector3.forward*speed*Time.deltaTime);
         if (count>=2){
             Destroy(gameObject);
-            count=0;
+            poseido = false;
+            count =0;
         }
     }
     /*void OnTriggerEnter(Collider other) {
@@ -49,6 +51,7 @@ public class RayOBJ : MonoBehaviour
     void menso(){
         if (enemigo != null){
             enemigo.tag = "Poseido";
+            poseido = true;
             ia = enemigo.GetComponent<EnemigoIA>();
             rb = enemigo.GetComponent<Rigidbody>();
             agent = enemigo.GetComponent<NavMeshAgent>();

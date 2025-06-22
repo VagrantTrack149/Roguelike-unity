@@ -147,3 +147,5 @@ MonoBehaviour:
   duration: 0
   Enemies: []
   radio: 15
+  vida_Enemy: {fileID: 0}
+  rayOBJ: {fileID: 4496427506747659636, guid: 8b3623e2c69cf8745bb77c7da887251b, type: 3}

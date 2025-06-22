@@ -6,7 +6,7 @@ using UnityEngine;
 public class Vida_Jugador : MonoBehaviour
 {
     public int MaxVida=10;
-    public int VidaActual;
+    public int VidaActual=0;
     public GameObject Player;
     // Start is called before the first frame update
     void Start()
@@ -16,7 +16,7 @@ public class Vida_Jugador : MonoBehaviour
     }
 
     public void Daño(int damage){
-        VidaActual=VidaActual-damage;
+        VidaActual-=damage;
         Debug.Log(VidaActual);
         if (VidaActual <= 0)
         {
