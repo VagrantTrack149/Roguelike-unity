@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
             controller.enabled = true;
             speed = 10;
             muerte = false;
-            Vida.VidaActual = 10;
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
             Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
