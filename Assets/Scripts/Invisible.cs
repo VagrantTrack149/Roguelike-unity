@@ -4,45 +4,77 @@ using UnityEngine;
 
 public class Invisible : MonoBehaviour
 {
-    public float time=0;
-    public bool f= false;
+    public float invisibleDuration = 2f; 
+    public float cooldownDuration = 6f; 
+    public float time = 0;
+    public bool isInvisible = false;
+    public bool inCooldown = false;
     public GameObject gg;
     public Renderer render;
-    public Material mat; //material original
-    public Material mat1; //material a cambiar
-    public Color col;
+    public Material originalMaterial; //material original
+    public Material invisibleMaterial; //material a cambiar
     public Controles controles;
-    // Start is called before the first frame update
+    
     void Start()
     {
         controles = GameObject.Find("Controles").GetComponent<Controles>();
-        render=gg.GetComponent<Renderer>();
-        mat=render.material;
-        //col=mat.color;
+        render = gg.GetComponent<Renderer>();
+        originalMaterial = render.material;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(controles.Invisible) && !f){
-            gameObject.tag="Poseido";
-            //col.a=0f;
-            if (render != null && mat1 != null){
-                render.material = mat1; 
+        if (Input.GetKeyDown(controles.Invisible) && !isInvisible && !inCooldown)
+        {
+            StartInvisibility();
+        }
+        
+        if (isInvisible)
+        {
+            time += Time.deltaTime;
+            if (time >= invisibleDuration)
+            {
+                EndInvisibility();
+                StartCooldown();
             }
-            f=true;
         }
-        if (f){
-            time+=Time.deltaTime;
-            if (time>=2){
-                gameObject.tag ="Player";
-                //col.a = 1f;
-                if (render != null && mat != null){
-                    render.material = mat; 
-                }
-                f=false;    
-                time=0;
-            }       
+        
+        if (inCooldown)
+        {
+            time += Time.deltaTime;
+            if (time >= cooldownDuration)
+            {
+                inCooldown = false;
+                time = 0;
+            }
         }
+    }
+    
+    void StartInvisibility()
+    {
+        gameObject.tag = "Poseido";
+        if (render != null && invisibleMaterial != null)
+        {
+            render.material = invisibleMaterial; 
+        }
+        isInvisible = true;
+        time = 0;
+    }
+    
+    void EndInvisibility()
+    {
+        gameObject.tag = "Player";
+        if (render != null && originalMaterial != null)
+        {
+            render.material = originalMaterial;
+        }
+        isInvisible = false;
+        time = 0;
+    }
+    
+    void StartCooldown()
+    {
+        inCooldown = true;
+        time = 0;
     }
 }

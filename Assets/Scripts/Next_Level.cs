@@ -6,7 +6,8 @@ public class Next_Level : MonoBehaviour
 {
     public PlayerMovement PlayerMovement;
     // Start is called before the first frame update
-    void OnTriggerEnter(Collider other) {
-        PlayerMovement.muerte=true;
+    void OnTriggerEnter(Collider other){
+        PlayerMovement.muerte = true;
+        PlayerMovement.HandleRespawn();
     }
 }

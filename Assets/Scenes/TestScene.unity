@@ -1048,6 +1048,7 @@ MonoBehaviour:
   player: {fileID: 651350467}
   offsetDistance: 0.8
   count: 0
+  controles: {fileID: 0}
 --- !u!114 &651350474 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8869222047412254747, guid: e98f9364f35851b47a692ac10cabd91e, type: 3}
@@ -1948,6 +1949,7 @@ MonoBehaviour:
   textMeshProComponent: {fileID: 290708288}
   Panel_Texto: {fileID: 966204238}
   playerMovement: {fileID: 0}
+  controles: {fileID: 0}
 --- !u!65 &1242836694
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3316,6 +3318,10 @@ PrefabInstance:
       propertyPath: render
       value: 
       objectReference: {fileID: 1113395773}
+    - target: {fileID: 5971214582550050136, guid: e98f9364f35851b47a692ac10cabd91e, type: 3}
+      propertyPath: invisibleMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 1f2fa7c6db3bfb549be607f113d067a9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
