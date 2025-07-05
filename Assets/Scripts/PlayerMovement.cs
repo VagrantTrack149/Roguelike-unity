@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 controller.Move(moveDir.normalized * speed * Time.deltaTime);
-                anima.SetBool("Walk", true);
+                anima.SetBool("Caminar", true);
                 /*count += Time.deltaTime;
                 if (count >= 2)
                 {
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                anima.SetBool("Walk", false);
+                anima.SetBool("Caminar", false);
             }
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
             if (isGrounded && velocity.y < 0)

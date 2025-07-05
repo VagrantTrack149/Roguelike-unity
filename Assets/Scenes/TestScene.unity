@@ -1049,6 +1049,7 @@ MonoBehaviour:
   offsetDistance: 0.8
   count: 0
   controles: {fileID: 0}
+  anima: {fileID: 651350476}
 --- !u!114 &651350474 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8869222047412254747, guid: e98f9364f35851b47a692ac10cabd91e, type: 3}
@@ -1060,6 +1061,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2a61c305de3724192f850b11239138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &651350476 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8332240212085962884, guid: e98f9364f35851b47a692ac10cabd91e, type: 3}
+  m_PrefabInstance: {fileID: 983615574493585945}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &665446621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3315,6 +3321,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 1f2fa7c6db3bfb549be607f113d067a9, type: 2}
     - target: {fileID: 5971214582550050136, guid: e98f9364f35851b47a692ac10cabd91e, type: 3}
+      propertyPath: anima
+      value: 
+      objectReference: {fileID: 651350476}
+    - target: {fileID: 5971214582550050136, guid: e98f9364f35851b47a692ac10cabd91e, type: 3}
       propertyPath: render
       value: 
       objectReference: {fileID: 1113395773}
@@ -3322,6 +3332,10 @@ PrefabInstance:
       propertyPath: invisibleMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 1f2fa7c6db3bfb549be607f113d067a9, type: 2}
+    - target: {fileID: 8332240212085962884, guid: e98f9364f35851b47a692ac10cabd91e, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: b407272f04a000d499d00252e4c8c3ca, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

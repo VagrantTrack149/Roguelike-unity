@@ -9,6 +9,8 @@ public class Ataque : MonoBehaviour
     public float offsetDistance = 0.8f;
     public float count;
     public Controles controles;
+    public Animator anima;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +22,19 @@ public class Ataque : MonoBehaviour
     {
         Vector3 adjustedPosition=player.transform.position+player.transform.forward * offsetDistance;
         count+= Time.deltaTime;
-        if (count>=1){
-            if (Input.GetKeyDown(controles.Attack)){
-                GameObject armaGen=Instantiate(arma, adjustedPosition, player.transform.rotation);
-                armaGen.transform.parent=player.transform;
-                count=0;
+        if (count >= 1)
+        {
+            if (Input.GetKeyDown(controles.Attack))
+            {
+                anima.SetBool("Ataque", true);
+                GameObject armaGen = Instantiate(arma, adjustedPosition, player.transform.rotation);
+                armaGen.transform.parent = player.transform;
+                count = 0;
             }
+        }
+        else
+        {
+            anima.SetBool("Ataque", false);
         }
     }
 }

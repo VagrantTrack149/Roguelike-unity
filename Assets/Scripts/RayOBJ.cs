@@ -24,7 +24,7 @@ public class RayOBJ : MonoBehaviour
     {
         player=GameObject.Find("Player");
         rm=player.GetComponent<PlayerMovement>();
-        modelo=GameObject.Find("Model");
+        modelo=GameObject.Find("Animado_mage");
         ray=player.GetComponent<RayController>();
     }
 

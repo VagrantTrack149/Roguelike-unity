@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Invisible : MonoBehaviour
 {
+    public Animator anima;
     public float invisibleDuration = 2f; 
     public float cooldownDuration = 6f; 
     public float time = 0;
@@ -27,6 +28,7 @@ public class Invisible : MonoBehaviour
         if (Input.GetKeyDown(controles.Invisible) && !isInvisible && !inCooldown)
         {
             StartInvisibility();
+            anima.SetBool("Invisible", true);
         }
         
         if (isInvisible)
@@ -36,6 +38,7 @@ public class Invisible : MonoBehaviour
             {
                 EndInvisibility();
                 StartCooldown();
+                anima.SetBool("Invisible", false);
             }
         }
         
