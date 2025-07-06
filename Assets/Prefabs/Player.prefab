@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombaPrefab: {fileID: 6630114923534818473, guid: 3f158c0e4abca584da886fc2337b2c2b, type: 3}
+  anima: {fileID: 8332240212085962884}
   player: {fileID: 2619122859165760462}
   count: 0
   offsetDistance: 2
@@ -286,7 +287,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2619122859165760462}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 229aa3005f149b243911c0fb9e7d18ef, type: 3}
+  m_Avatar: {fileID: 9000000, guid: b407272f04a000d499d00252e4c8c3ca, type: 3}
   m_Controller: {fileID: 9100000, guid: bb2cdec07774bbe4baba9bdfb03c3cc5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -312,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 0
+  anima: {fileID: 8332240212085962884}
   ray: {fileID: 1276984890523228464, guid: 8b3623e2c69cf8745bb77c7da887251b, type: 3}
   player: {fileID: 2619122859165760462}
   offsetDistance: 2
@@ -332,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba10c1aa7cc752049a239d3a4485cd34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anima: {fileID: 8332240212085962884}
   invisibleDuration: 2
   cooldownDuration: 6
   time: 0

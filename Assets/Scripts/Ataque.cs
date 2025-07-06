@@ -14,7 +14,8 @@ public class Ataque : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controles = GameObject.Find("Controles").GetComponent<Controles>();   
+        controles = GameObject.Find("Controles").GetComponent<Controles>();
+        player =GameObject.Find("Player");   
     }
 
     // Update is called once per frame
@@ -24,7 +25,7 @@ public class Ataque : MonoBehaviour
         count+= Time.deltaTime;
         if (count >= 1)
         {
-            if (Input.GetKeyDown(controles.Attack))
+            if (Input.GetKeyDown(controles.Attack) && player.tag != "Poseido")
             {
                 anima.SetBool("Ataque", true);
                 GameObject armaGen = Instantiate(arma, adjustedPosition, player.transform.rotation);

@@ -3,7 +3,27 @@ guid: b407272f04a000d499d00252e4c8c3ca
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Luvas_Botas
+    second: {fileID: 2100000, guid: 7d6526c325869a8439d95b10914f59f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 875e1c7c5b6f0904e9988951e0548b9f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 832212a511fc2454590ff95f697c2f5e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sombrero
+    second: {fileID: 2100000, guid: 0296e1823676c76469a6397a22c110ee, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

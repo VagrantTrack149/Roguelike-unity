@@ -5,6 +5,7 @@ using UnityEngine;
 public class RayController : MonoBehaviour
 {
     public float count;
+    public Animator anima;
     public GameObject ray;
     public GameObject player;
     public float offsetDistance = 2f;
@@ -40,9 +41,15 @@ public class RayController : MonoBehaviour
     }
     void lanzar(){
         Vector3 adjustedPosition=player.transform.position+player.transform.forward * offsetDistance;
-        if (Input.GetKeyDown(controles.Robo)){
-            Instantiate(ray,adjustedPosition, player.transform.rotation);
-            count=0; 
+        if (Input.GetKeyDown(controles.Robo))
+        {
+            Instantiate(ray, adjustedPosition, player.transform.rotation);
+            count = 0;
+            anima.SetBool("Ataque", true);
+        }
+        else
+        {
+            anima.SetBool("Ataque", false);
         }  
     }
 }
