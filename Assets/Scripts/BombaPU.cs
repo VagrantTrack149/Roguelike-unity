@@ -24,12 +24,12 @@ public class BombaPU : MonoBehaviour
             {
                 Instantiate(bombaPrefab, adjustedPosition, player.transform.rotation);
                 count = 0;
-                anima.SetBool("Ataque", true);
+                anima.SetBool("Ataque_rap", true);
             }
         }
         else
         {
-            anima.SetBool("Ataque", false);
+            anima.SetBool("Ataque_rap", false);
         }     
           
     }

@@ -38,8 +38,10 @@ public class Explotion : MonoBehaviour
         Destroy(gameObject); 
     }
     void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Enemy")) {
-            if (rayOBJ.poseido==false){
+        if (other.CompareTag("Enemy") && other.name!="Player")
+        {
+            if (rayOBJ.poseido == false)
+            {
                 vida_Enemy = other.GetComponent<Vida_enemy>();
                 vida_Enemy.Daño(10);
                 //Destroy(other.gameObject);

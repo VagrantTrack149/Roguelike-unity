@@ -51,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
                 controller.Move(moveDir.normalized * speed * Time.deltaTime);
                 anima.SetBool("Caminar", true);
                 anima.SetBool("Invisible", false);
+                anima.SetBool("Ataque_rap", false);
+                anima.SetBool("Ataque", false);
                 
                 /*count += Time.deltaTime;
                 if (count >= 2)

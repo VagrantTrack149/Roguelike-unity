@@ -21,35 +21,56 @@ public class RayController : MonoBehaviour
         controles = GameObject.Find("Controles").GetComponent<Controles>();
         player =GameObject.Find("Player");
         rm=player.GetComponent<PlayerMovement>();
-        modelo=GameObject.Find("Model");
+        modelo=GameObject.Find("Animado_mage");
     }
 
     // Update is called once per frame
     void Update()
     {
-        enemigo=GameObject.FindWithTag("Poseido");
-        count+= Time.deltaTime;
-        if (count>=1 && trans==false){
-           lanzar();
+        enemigo = GameObject.FindWithTag("Poseido");
+        
+        count += Time.deltaTime;
+        if (count >= 1 && trans == false)
+        {
+            lanzar();
         }
-        if (count>=6 && trans==true){
+        if (count >= 6 && trans == true)
+        {
             modelo.SetActive(true);
             Destroy(enemigo);
-            player.tag="Player";
-            trans=false;
+            player.tag = "Player";
+            trans = false;
         }
-    }
-    void lanzar(){
-        Vector3 adjustedPosition=player.transform.position+player.transform.forward * offsetDistance;
         if (Input.GetKeyDown(controles.Robo))
         {
-            Instantiate(ray, adjustedPosition, player.transform.rotation);
-            count = 0;
-            anima.SetBool("Ataque", true);
+            anima.SetBool("Ataque_rap", true);
         }
         else
         {
-            anima.SetBool("Ataque", false);
-        }  
+            anima.SetBool("Ataque_rap", false);
+        }
     }
+    void lanzar(){
+    Vector3 adjustedPosition = player.transform.position + player.transform.forward * offsetDistance;
+    
+    if (Input.GetKeyDown(controles.Robo))
+    {
+        anima.SetBool("Ataque_rap", true);
+        Instantiate(ray, adjustedPosition, player.transform.rotation);
+        count = 0;
+    }
+    else
+    {
+        // Verificar si la animación ATAQUE_RAPIDO ha terminado
+        AnimatorStateInfo currentState = anima.GetCurrentAnimatorStateInfo(0);
+        
+        // Asume que "ATAQUE_RAPIDO" es el nombre exacto del estado de animación en tu Animator
+        if (currentState.IsName("ATAQUE RAP") && currentState.normalizedTime >= 1.0f)
+        {
+            // La animación ha terminado, establecer Ataque_rap a false
+            anima.SetBool("Ataque_rap", false);
+        }
+    }  
+    }
+
 }

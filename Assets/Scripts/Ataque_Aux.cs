@@ -26,12 +26,14 @@ public class Ataque_Aux : MonoBehaviour
         }
     }
     void OnTriggerEnter(Collider other) {
-        Rigidbody rb =other.GetComponent<Rigidbody>();
-        if (other.CompareTag("Enemy")){
-            vida_Enemy=other.GetComponent<Vida_enemy>();
+        Rigidbody rb =other.GetComponent<Rigidbody>();      
+        if (other.CompareTag("Enemy"))
+        {
+            vida_Enemy = other.GetComponent<Vida_enemy>();
             StartCoroutine(EmpujarEnemigo(other.transform));
             vida_Enemy.Daño(5);
         }
+        
     }
     void OnTriggerStay(Collider other) {
          Rigidbody rb =other.GetComponent<Rigidbody>();

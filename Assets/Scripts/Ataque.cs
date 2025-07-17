@@ -25,7 +25,7 @@ public class Ataque : MonoBehaviour
         count+= Time.deltaTime;
         if (count >= 1)
         {
-            if (Input.GetKeyDown(controles.Attack) && player.tag != "Poseido")
+            if (Input.GetKeyDown(controles.Attack) && player.tag != "Enemy")
             {
                 anima.SetBool("Ataque", true);
                 GameObject armaGen = Instantiate(arma, adjustedPosition, player.transform.rotation);
