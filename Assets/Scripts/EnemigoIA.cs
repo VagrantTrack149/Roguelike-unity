@@ -20,10 +20,15 @@ public class EnemigoIA : MonoBehaviour
     public Ataque_Enemy Ataque_Enemy;
     public float lastAttackTime;
     public float attackCooldown = 1f;
-
+    public Animator anima;
+    public bool aparecer_ataque=false;
     void Start()
     {
         Ataque_Enemy = gameObject.GetComponent<Ataque_Enemy>();
+        anima.SetBool("Walk", false);
+        anima.SetBool("Atack", false);
+        anima.SetBool("Run", false);
+        
     }
 
     void Update()
@@ -55,6 +60,7 @@ public class EnemigoIA : MonoBehaviour
         {
             visto = false;
             Comportamiendo_ene(3, vel_caminar);
+            
         }
         else
         {
@@ -66,21 +72,37 @@ public class EnemigoIA : MonoBehaviour
 
             agente.enabled = true;
             agente.SetDestination(target.transform.position);
-
-            if (Vector3.Distance(transform.position, target.transform.position) <= 3)
+            if (agente.enabled==true)
             {
+                anima.SetBool("Run", true);
+            }
+            if (Vector3.Distance(transform.position, target.transform.position) <= 6)
+            {
+                vel_caminar = 0;
+                vel_correr = 0;
                 Debug.Log("Cerca");
                 agente.isStopped = true;
                 if (Time.time - lastAttackTime >= attackCooldown)
                 {
                     Debug.Log("Ataque");
                     Ataque_Enemy.Atacar();
+                    anima.SetBool("Atack", true);
+                    anima.SetBool("Walk", false);
+                    anima.SetBool("Run", false);
                     lastAttackTime = Time.time;
+                    aparecer_ataque = true;
                 }
+
             }
             else
             {
+                aparecer_ataque=false;
+                vel_caminar = 3;
+                vel_correr = 10;
+                anima.SetBool("Atack", false);
                 agente.isStopped = false;
+                anima.SetBool("Run", false);
+                anima.SetBool("Walk", false);
             }
         }
     }
@@ -102,11 +124,20 @@ public class EnemigoIA : MonoBehaviour
                 grado = Random.Range(0, 360);
                 angulo = Quaternion.Euler(0, grado, 0);
                 rutina++;
+                anima.SetBool("Run", false);
+                anima.SetBool("Walk", false);
                 break;
             case 2:
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, angulo, 0.5f);
                 transform.Translate(Vector3.forward * caminar * Time.deltaTime);
-
+                if (visto)
+                {
+                    anima.SetBool("Run", true);
+                }
+                else
+                {
+                    anima.SetBool("Walk", true);
+                }
                 if (target != null && Vector3.Distance(transform.position, target.transform.position) <= 3)
                 {
                     Debug.Log("Cerca (during wander)");
