@@ -19,9 +19,10 @@ public class EnemigoIA : MonoBehaviour
     public bool visto=false;
     public Ataque_Enemy Ataque_Enemy;
     public float lastAttackTime;
-    public float attackCooldown = 1f;
+    public float attackCooldown = 3f;
     public Animator anima;
     public bool aparecer_ataque=false;
+    public bool recuperar=false;
     void Start()
     {
         Ataque_Enemy = gameObject.GetComponent<Ataque_Enemy>();
@@ -82,27 +83,31 @@ public class EnemigoIA : MonoBehaviour
                 vel_correr = 0;
                 Debug.Log("Cerca");
                 agente.isStopped = true;
+                agente.enabled = false;
                 if (Time.time - lastAttackTime >= attackCooldown)
                 {
                     Debug.Log("Ataque");
-                    Ataque_Enemy.Atacar();
+                    //Ataque_Enemy.Atacar();
                     anima.SetBool("Atack", true);
                     anima.SetBool("Walk", false);
                     anima.SetBool("Run", false);
                     lastAttackTime = Time.time;
                     aparecer_ataque = true;
+                    recuperar = false;
                 }
 
             }
             else
             {
-                aparecer_ataque=false;
+                aparecer_ataque = false;
                 vel_caminar = 3;
                 vel_correr = 10;
                 anima.SetBool("Atack", false);
                 agente.isStopped = false;
+                agente.enabled = true;
                 anima.SetBool("Run", false);
                 anima.SetBool("Walk", false);
+                recuperar=true;
             }
         }
     }
@@ -140,7 +145,7 @@ public class EnemigoIA : MonoBehaviour
                 }
                 if (target != null && Vector3.Distance(transform.position, target.transform.position) <= 3)
                 {
-                    Debug.Log("Cerca (during wander)");
+                    Debug.Log("Cerca");
                     visto = true;
                 }
                 break;

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Desvanecer : MonoBehaviour
 {
-    public float time = 0;
+    public float time = 0f;
+    public float T_vida = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +15,9 @@ public class Desvanecer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time+=Time.deltaTime;
-        if (time > 1.5)
+        time +=Time.deltaTime;
+        //Debug.Log(time);
+        if (time >= T_vida)
         {
             Destroy(gameObject);
         }

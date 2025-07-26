@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Ataque_Enemy : MonoBehaviour
 {
-    public int damage = 3;
     public GameObject Player;
     // Start is called before the first frame update
     void Start()
@@ -17,9 +16,13 @@ public class Ataque_Enemy : MonoBehaviour
     {
 
     }
-    public void Atacar()
+    public void Atacar(int damage)
     {
-        Vida_Jugador Vida = Player.GetComponent<Vida_Jugador>();
-        Vida.Daño(damage);
+        if (Player != null)
+        {
+            Vida_Jugador Vida = Player.GetComponent<Vida_Jugador>();
+            Vida.Daño(damage);    
+        }
+        
     }
 }
