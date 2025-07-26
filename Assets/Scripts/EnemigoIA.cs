@@ -9,27 +9,30 @@ public class EnemigoIA : MonoBehaviour
     public float crono;
     public Quaternion angulo;
     public float grado;
-    public int vel_caminar=3;
-    public int vel_correr=10;
+    public int vel_caminar = 3;
+    public int vel_correr = 10;
     public GameObject target;
     public NavMeshAgent agente;
     public float distancia_ataque;
-    public float radio_vision=8;
-    public float radio_vision_visto=16;
-    public bool visto=false;
+    public float radio_vision = 8;
+    public float radio_vision_visto = 16;
+    public bool visto = false;
     public Ataque_Enemy Ataque_Enemy;
     public float lastAttackTime;
     public float attackCooldown = 3f;
     public Animator anima;
-    public bool aparecer_ataque=false;
-    public bool recuperar=false;
+    public bool aparecer_ataque = false;
+    public bool recuperar = false;
+    public tipo_enemy tipo;
+    public float distanciaExpulsion = 1f; 
+    public float duracionEmpuje = 0.5f;
     void Start()
     {
         Ataque_Enemy = gameObject.GetComponent<Ataque_Enemy>();
         anima.SetBool("Walk", false);
         anima.SetBool("Atack", false);
         anima.SetBool("Run", false);
-        
+
     }
 
     void Update()
@@ -61,7 +64,7 @@ public class EnemigoIA : MonoBehaviour
         {
             visto = false;
             Comportamiendo_ene(3, vel_caminar);
-            
+
         }
         else
         {
@@ -73,11 +76,11 @@ public class EnemigoIA : MonoBehaviour
 
             agente.enabled = true;
             agente.SetDestination(target.transform.position);
-            if (agente.enabled==true)
+            if (agente.enabled == true)
             {
                 anima.SetBool("Run", true);
             }
-            if (Vector3.Distance(transform.position, target.transform.position) <= 6)
+            if (Vector3.Distance(transform.position, target.transform.position) <= 5)
             {
                 vel_caminar = 0;
                 vel_correr = 0;
@@ -86,14 +89,25 @@ public class EnemigoIA : MonoBehaviour
                 agente.enabled = false;
                 if (Time.time - lastAttackTime >= attackCooldown)
                 {
+                    recuperar = false;
                     Debug.Log("Ataque");
-                    //Ataque_Enemy.Atacar();
+                    //
                     anima.SetBool("Atack", true);
                     anima.SetBool("Walk", false);
                     anima.SetBool("Run", false);
                     lastAttackTime = Time.time;
-                    aparecer_ataque = true;
-                    recuperar = false;
+
+
+                    if (tipo.tipo == 1)
+                    {
+                        Ataque_Enemy.Atacar(3);
+                        StartCoroutine(EmpujarPlayer(target.transform));
+
+                    }
+                    if (tipo.tipo == 2)
+                    {
+                        aparecer_ataque = true;
+                    }
                 }
 
             }
@@ -107,7 +121,7 @@ public class EnemigoIA : MonoBehaviour
                 agente.enabled = true;
                 anima.SetBool("Run", false);
                 anima.SetBool("Walk", false);
-                recuperar=true;
+                recuperar = true;
             }
         }
     }
@@ -149,6 +163,34 @@ public class EnemigoIA : MonoBehaviour
                     visto = true;
                 }
                 break;
+        }
+    }
+
+    public void empujar(Transform player)
+    {
+        //Vector3 direccion= (player.position-transform.position).normalized;
+
+    }
+    IEnumerator EmpujarPlayer(Transform enemigo)
+    {
+         if (enemigo == null){
+            yield break; 
+        }
+        Vector3 direccion = (enemigo.position - transform.position).normalized;
+        //Vector3 direccion = player.transform.position;
+
+        Vector3 posicionFinal = enemigo.position + direccion * distanciaExpulsion;
+        float tiempoTranscurrido = 0f;
+
+        while (tiempoTranscurrido < duracionEmpuje)
+        {
+            if (enemigo == null){
+                yield break;
+            }
+            enemigo.position = Vector3.Lerp(enemigo.position, posicionFinal, tiempoTranscurrido/duracionEmpuje);
+            tiempoTranscurrido += Time.deltaTime;
+            yield return null; 
+            
         }
     }
 }
