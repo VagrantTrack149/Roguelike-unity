@@ -80,7 +80,16 @@ public class EnemigoIA : MonoBehaviour
             {
                 anima.SetBool("Run", true);
             }
-            if (Vector3.Distance(transform.position, target.transform.position) <= 5)
+            int distancia=5;
+            if (tipo.tipo == 1)
+            {
+                distancia = 4;
+            }
+            if (tipo.tipo == 2)
+            {
+                distancia = 6;
+            }
+            if (Vector3.Distance(transform.position, target.transform.position) <= distancia)
             {
                 vel_caminar = 0;
                 vel_correr = 0;
@@ -91,7 +100,8 @@ public class EnemigoIA : MonoBehaviour
                 {
                     recuperar = false;
                     Debug.Log("Ataque");
-                    //
+                    //subir velocidad de animación de ataque si tipo.tipo = 1
+                    // añadir
                     anima.SetBool("Atack", true);
                     anima.SetBool("Walk", false);
                     anima.SetBool("Run", false);
