@@ -26,13 +26,22 @@ public class EnemigoIA : MonoBehaviour
     public tipo_enemy tipo;
     public float distanciaExpulsion = 1f; 
     public float duracionEmpuje = 0.5f;
+    public Vida_enemy vida_Enemy;
+    
+    // Estados del enemigo
+    private enum Estado { Patrulla, Sorprendido, Persiguiendo, Morir }
+    private Estado estadoActual = Estado.Patrulla;
+    private bool animacionMirarCompletada = false;
+
     void Start()
     {
         Ataque_Enemy = gameObject.GetComponent<Ataque_Enemy>();
-        anima.SetBool("Walk", false);
-        anima.SetBool("Atack", false);
-        anima.SetBool("Run", false);
-
+        anima.SetBool("Caminar", false);
+        anima.SetBool("Mirar", false);
+        anima.SetBool("T_Mirar", false);
+        anima.SetBool("Vida", false);
+        vida_Enemy = gameObject.GetComponent<Vida_enemy>();
+        agente = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -40,167 +49,191 @@ public class EnemigoIA : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player");
         if (target == null)
         {
-            Comportamiendo_ene(3, vel_caminar);
+            EstadoPatrulla();
+            return;
         }
-        else
+
+        // Máquina de estados
+        switch (estadoActual)
         {
-            mirar_player();
+            case Estado.Patrulla:
+                EstadoPatrulla();
+                //Debug.Log("Patrulla");
+                break;
+            case Estado.Sorprendido:
+                EstadoSorprendido();
+                //Debug.Log("Sorprendido");
+                break;
+            case Estado.Persiguiendo:
+                EstadoPersiguiendo();
+                //Debug.Log("Perseguir");
+                break;
+            case Estado.Morir:
+                EstadoMorir();
+                break;
+            default:
+                EstadoPatrulla();
+                break;
         }
     }
 
-    public void mirar_player()
+    private void EstadoPatrulla()
     {
-        if (visto)
-        {
-            if (Vector3.Distance(transform.position, target.transform.position) > radio_vision_visto)
-            {
-                visto = false;
-                Comportamiendo_ene(3, vel_caminar);
-                return;
-            }
-        }
+        agente.speed = vel_caminar;
+        anima.SetBool("Caminar", true);
+        anima.SetBool("Mirar", false);
+        anima.SetBool("T_Mirar", false);
 
-        if (Vector3.Distance(transform.position, target.transform.position) > radio_vision)
-        {
-            visto = false;
-            Comportamiendo_ene(3, vel_caminar);
-
-        }
-        else
-        {
-            visto = true;
-            var lookplayer = target.transform.position - transform.position;
-            lookplayer.y = 0;
-            var rotation = Quaternion.LookRotation(lookplayer);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
-
-            agente.enabled = true;
-            agente.SetDestination(target.transform.position);
-            if (agente.enabled == true)
-            {
-                anima.SetBool("Run", true);
-            }
-            int distancia=5;
-            if (tipo.tipo == 1)
-            {
-                distancia = 4;
-            }
-            if (tipo.tipo == 2)
-            {
-                distancia = 6;
-            }
-            if (Vector3.Distance(transform.position, target.transform.position) <= distancia)
-            {
-                vel_caminar = 0;
-                vel_correr = 0;
-                Debug.Log("Cerca");
-                agente.isStopped = true;
-                agente.enabled = false;
-                if (Time.time - lastAttackTime >= attackCooldown)
-                {
-                    recuperar = false;
-                    Debug.Log("Ataque");
-                    //subir velocidad de animación de ataque si tipo.tipo = 1
-                    // añadir
-                    anima.SetBool("Atack", true);
-                    anima.SetBool("Walk", false);
-                    anima.SetBool("Run", false);
-                    lastAttackTime = Time.time;
-
-
-                    if (tipo.tipo == 1)
-                    {
-                        Ataque_Enemy.Atacar(3);
-                        StartCoroutine(EmpujarPlayer(target.transform));
-
-                    }
-                    if (tipo.tipo == 2)
-                    {
-                        aparecer_ataque = true;
-                    }
-                }
-
-            }
-            else
-            {
-                aparecer_ataque = false;
-                vel_caminar = 3;
-                vel_correr = 10;
-                anima.SetBool("Atack", false);
-                agente.isStopped = false;
-                agente.enabled = true;
-                anima.SetBool("Run", false);
-                anima.SetBool("Walk", false);
-                recuperar = true;
-            }
-        }
-    }
-
-    public void Comportamiendo_ene(int tiempo, int caminar)
-    {
-        agente.enabled = false;
+        // Comportamiento de patrulla aleatoria
         crono += Time.deltaTime;
-        if (crono >= tiempo)
+        if (crono >= 3f)
         {
             rutina = Random.Range(0, 2);
             crono = 0;
         }
+
         switch (rutina)
         {
             case 0:
+                // Esperar en lugar
                 break;
             case 1:
+                // Caminar en dirección aleatoria
                 grado = Random.Range(0, 360);
                 angulo = Quaternion.Euler(0, grado, 0);
-                rutina++;
-                anima.SetBool("Run", false);
-                anima.SetBool("Walk", false);
-                break;
-            case 2:
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, angulo, 0.5f);
-                transform.Translate(Vector3.forward * caminar * Time.deltaTime);
-                if (visto)
-                {
-                    anima.SetBool("Run", true);
-                }
-                else
-                {
-                    anima.SetBool("Walk", true);
-                }
-                if (target != null && Vector3.Distance(transform.position, target.transform.position) <= 3)
-                {
-                    Debug.Log("Cerca");
-                    visto = true;
-                }
+                transform.Translate(Vector3.forward * vel_caminar * Time.deltaTime);
                 break;
         }
-    }
 
-    public void empujar(Transform player)
-    {
-        //Vector3 direccion= (player.position-transform.position).normalized;
-
-    }
-    IEnumerator EmpujarPlayer(Transform enemigo)
-    {
-         if (enemigo == null){
-            yield break; 
+        // Verificar si ve al jugador
+        if (target != null && Vector3.Distance(transform.position, target.transform.position) <= radio_vision)
+        {
+            estadoActual = Estado.Sorprendido;
+            visto = true;
+            animacionMirarCompletada = false;
         }
-        Vector3 direccion = (enemigo.position - transform.position).normalized;
-        //Vector3 direccion = player.transform.position;
+    }
 
-        Vector3 posicionFinal = enemigo.position + direccion * distanciaExpulsion;
+    private void EstadoSorprendido()
+    {
+        agente.isStopped = true;
+        anima.SetBool("Caminar", false);
+        anima.SetBool("Mirar", true);
+        anima.SetBool("T_Mirar", false);
+
+        // Mirar hacia el jugador
+        var lookPlayer = target.transform.position - transform.position;
+        lookPlayer.y = 0;
+        var rotation = Quaternion.LookRotation(lookPlayer);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
+
+        // Esperar a que termine la animación de "Mirar" antes de pasar a perseguir
+        if (!animacionMirarCompletada)
+        {
+            // Usar un temporizador simple para simular el fin de la animación
+            StartCoroutine(EsperarAnimacionMirar());
+        }
+    }
+
+    private IEnumerator EsperarAnimacionMirar()
+    {
+        // Esperar el tiempo aproximado de la animación Mirar
+        yield return new WaitForSeconds(1f);
+        
+        animacionMirarCompletada = true;
+        estadoActual = Estado.Persiguiendo;
+        agente.speed = vel_correr;
+        if (agente.isActiveAndEnabled && agente.isOnNavMesh)
+        { 
+            agente.isStopped = false;
+        }
+    }
+
+    private void EstadoPersiguiendo()
+    {
+        anima.SetBool("Caminar", false);
+        anima.SetBool("Mirar", false);
+        anima.SetBool("T_Mirar", true);
+
+        // Perseguir al jugador
+        agente.SetDestination(target.transform.position);
+
+        // Verificar si el jugador se alejó demasiado
+        if (Vector3.Distance(transform.position, target.transform.position) > radio_vision_visto)
+        {
+            estadoActual = Estado.Patrulla;
+            visto = false;
+            return;
+        }
+
+        // Determinar distancia de ataque según el tipo
+        int distanciaAtaque = tipo.tipo == 1 ? 4 : 6;
+
+        // Verificar si está en rango para atacar
+        if (Vector3.Distance(transform.position, target.transform.position) <= distanciaAtaque)
+        {
+            if (Time.time - lastAttackTime >= attackCooldown)
+            {
+                estadoActual = Estado.Patrulla;
+                StartCoroutine(EjecutarAtaque());
+            }
+        }
+    }
+
+    private IEnumerator EjecutarAtaque()
+    {
+        agente.isStopped = true;
+        
+        // Mantener la animación T_Mirar durante el ataque
+        anima.SetBool("T_Mirar", true);
+
+        // Ejecutar el ataque según el tipo
+        if (tipo.tipo == 1)
+        {
+            Ataque_Enemy.Atacar(3);
+            StartCoroutine(EmpujarPlayer(target.transform));
+        }
+        else if (tipo.tipo == 2)
+        {
+            aparecer_ataque = true;
+            Ataque_Enemy.Atacar(3);
+        }
+
+        lastAttackTime = Time.time;
+
+        // Esperar un momento para que se complete la animación de ataque
+        yield return new WaitForSeconds(0.15f);
+
+        // Pasar a estado de recuperación
+        estadoActual = Estado.Patrulla;
+    }
+
+
+    IEnumerator EmpujarPlayer(Transform player)
+    {
+        if (player == null) yield break;
+
+        Vector3 direccion = (player.position + transform.position).normalized;
+        Vector3 posicionFinal = player.position + direccion * distanciaExpulsion;
         float tiempoTranscurrido = 0f;
 
         while (tiempoTranscurrido < duracionEmpuje)
         {
-            if (enemigo == null){
-                yield break;
-            }
-            enemigo.position = Vector3.Lerp(enemigo.position, posicionFinal, tiempoTranscurrido/duracionEmpuje);
-            tiempoTranscurrido += Time.deltaTime;
-            yield return null; 
+            if (player == null) yield break;
             
+            player.position = Vector3.Lerp(player.position, posicionFinal, tiempoTranscurrido / duracionEmpuje);
+            tiempoTranscurrido += Time.deltaTime;
+            yield return null;
+        }
+    }
+    private void EstadoMorir(){
+        // Verificar si está muerto
+        if (vida_Enemy.VidaActual <= 0)
+        {
+            
+            agente.isStopped = true;
+            vida_Enemy.muerte_funcion();
         }
     }
 }

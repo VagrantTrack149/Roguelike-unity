@@ -31,7 +31,13 @@ public class Ataque_Aux : MonoBehaviour
         {
             vida_Enemy = other.GetComponent<Vida_enemy>();
             StartCoroutine(EmpujarEnemigo(other.transform));
-            vida_Enemy.Daño(5);
+            if (vida_Enemy.VidaActual<=5)
+            {
+                vida_Enemy.muerte_funcion();
+            }else{
+                vida_Enemy.Daño(5);
+            }
+            
         }
         
     }

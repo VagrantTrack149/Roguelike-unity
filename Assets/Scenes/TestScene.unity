@@ -344,7 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Puerta: {fileID: 1255672016}
   rojo: {r: 1, g: 0, b: 0, a: 1}
-  logic: {fileID: 409927539}
+  logic: {fileID: 0}
 --- !u!65 &107047588
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -970,7 +970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 568651277101617474, guid: 8f3f644c365dcff409160bc723c836ee, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3890617221292642286, guid: 8f3f644c365dcff409160bc723c836ee, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1086,17 +1086,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a476a4e8df13d54d8b3da81f828b02b, type: 3}
---- !u!114 &409927539 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3593821484333771128, guid: 5a476a4e8df13d54d8b3da81f828b02b, type: 3}
-  m_PrefabInstance: {fileID: 409927538}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255672016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65127ae7325c6df47b1835dd53c6f1eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &416517174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3002,6 +2991,14 @@ PrefabInstance:
     - target: {fileID: 568651277101617474, guid: 8f3f644c365dcff409160bc723c836ee, type: 3}
       propertyPath: m_Name
       value: Enemy(area)
+      objectReference: {fileID: 0}
+    - target: {fileID: 568651277101617474, guid: 8f3f644c365dcff409160bc723c836ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2273982279070825345, guid: 8f3f644c365dcff409160bc723c836ee, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3890617221292642286, guid: 8f3f644c365dcff409160bc723c836ee, type: 3}
       propertyPath: m_LocalPosition.x
