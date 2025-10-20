@@ -28,21 +28,8 @@ Assets/Models/images.jpeg.meta
 Assets/Models/istockphoto-1377965859-612x612 1.jpg
 Assets/Models/istockphoto-1377965859-612x612 1.jpg.meta
 Assets/Models/istockphoto-1377965859-612x612.jpg
-Assets/Models/istockphoto-1377965859-612x612.jpg.meta
-Assets/Models/rana_2.fbx.meta
-Assets/Models/torre.fbx.meta
-Assets/Prefabs/Ataque_Aura.prefab.meta
-Assets/Prefabs/Enemy(area).prefab.meta
-Assets/Prefabs/Enemy(cuerpo a cuerpo).prefab.meta
-Assets/Prefabs/Escenario.meta
-Assets/Prefabs/Escenario/
-Assets/Scenes/N1.unity
-Assets/Scenes/N1.unity.meta
-Assets/Scenes/TestScene/NavMesh-Terreno (1).asset
-Assets/Scenes/TestScene/NavMesh-Terreno (1).asset.meta
-Assets/Scenes/TestScene/NavMesh-Terreno (2).asset
-Assets/Scenes/TestScene/NavMesh-Terreno (2).asset.meta
-Assets/Scenes/TestScene/NavMesh-Terreno (3).asset
-Assets/Scenes/TestScene/NavMesh-Terreno (3).asset.meta
+Assets/Models/istockphoto-1377965859-612x612.jpg.meta>
+*.jpeg
+*.jpg
 *.meta
 *.unity

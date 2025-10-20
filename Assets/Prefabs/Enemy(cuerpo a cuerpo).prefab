@@ -148,7 +148,7 @@ MonoBehaviour:
   aparecer_ataque: 0
   recuperar: 0
   tipo: {fileID: 1127124277891534896}
-  distanciaExpulsion: 1
+  distanciaExpulsion: 4
   duracionEmpuje: 0.5
   vida_Enemy: {fileID: 0}
 --- !u!195 &4891986718533203290

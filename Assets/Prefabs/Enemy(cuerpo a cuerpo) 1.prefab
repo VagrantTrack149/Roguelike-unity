@@ -149,7 +149,7 @@ MonoBehaviour:
   aparecer_ataque: 0
   recuperar: 0
   tipo: {fileID: 1127124277891534896}
-  distanciaExpulsion: 1
+  distanciaExpulsion: 4
   duracionEmpuje: 0.5
   vida_Enemy: {fileID: 0}
 --- !u!195 &4891986718533203290
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42cac0bfe626ef499f91d42c10502fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipo: 1
+  tipo: 2
 --- !u!1001 &6045992520149369389
 PrefabInstance:
   m_ObjectHideFlags: 0

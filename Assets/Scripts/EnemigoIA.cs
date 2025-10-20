@@ -24,7 +24,7 @@ public class EnemigoIA : MonoBehaviour
     public bool aparecer_ataque = false;
     public bool recuperar = false;
     public tipo_enemy tipo;
-    public float distanciaExpulsion = 1f; 
+    public float distanciaExpulsion = 10f; 
     public float duracionEmpuje = 0.5f;
     public Vida_enemy vida_Enemy;
     
@@ -168,7 +168,7 @@ public class EnemigoIA : MonoBehaviour
         }
 
         // Determinar distancia de ataque según el tipo
-        int distanciaAtaque = tipo.tipo == 1 ? 4 : 6;
+        float distanciaAtaque = (float)(tipo.tipo == 1 ? 3.5 : 4);
 
         // Verificar si está en rango para atacar
         if (Vector3.Distance(transform.position, target.transform.position) <= distanciaAtaque)
@@ -189,12 +189,12 @@ public class EnemigoIA : MonoBehaviour
         anima.SetBool("T_Mirar", true);
 
         // Ejecutar el ataque según el tipo
-        if (tipo.tipo == 1)
+        if (tipo.tipo == 1 || tipo.tipo == 2)
         {
             Ataque_Enemy.Atacar(3);
             StartCoroutine(EmpujarPlayer(target.transform));
         }
-        else if (tipo.tipo == 2)
+        else if (tipo.tipo == 3)
         {
             aparecer_ataque = true;
             Ataque_Enemy.Atacar(3);
@@ -213,9 +213,11 @@ public class EnemigoIA : MonoBehaviour
     IEnumerator EmpujarPlayer(Transform player)
     {
         if (player == null) yield break;
-
-        Vector3 direccion = (player.position + transform.position).normalized;
+        //Debug.Log(player.position);
+        float Y= player.position.y;
+        Vector3 direccion = (player.position - transform.position).normalized;
         Vector3 posicionFinal = player.position + direccion * distanciaExpulsion;
+        posicionFinal.y=Y;
         float tiempoTranscurrido = 0f;
 
         while (tiempoTranscurrido < duracionEmpuje)
@@ -224,6 +226,14 @@ public class EnemigoIA : MonoBehaviour
             
             player.position = Vector3.Lerp(player.position, posicionFinal, tiempoTranscurrido / duracionEmpuje);
             tiempoTranscurrido += Time.deltaTime;
+            RaycastHit hit;
+            if (Physics.Raycast(player.position, direccion, out hit, (posicionFinal - player.position).magnitude))
+            {
+                if (hit.collider.gameObject != gameObject) 
+                {
+                    posicionFinal = hit.point - direccion * 0.2f; 
+                }
+            }
             yield return null;
         }
     }
