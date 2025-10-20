@@ -44,3 +44,5 @@ Assets/Scenes/TestScene/NavMesh-Terreno (2).asset
 Assets/Scenes/TestScene/NavMesh-Terreno (2).asset.meta
 Assets/Scenes/TestScene/NavMesh-Terreno (3).asset
 Assets/Scenes/TestScene/NavMesh-Terreno (3).asset.meta
+*.meta
+*.unity
