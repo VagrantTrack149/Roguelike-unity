@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,9 +33,20 @@ public class EnemigoIA : MonoBehaviour
     private enum Estado { Patrulla, Sorprendido, Persiguiendo, Morir }
     private Estado estadoActual = Estado.Patrulla;
     private bool animacionMirarCompletada = false;
+    public GameObject simbolo;
+    //public Animator interrogacion;
+    // Start is called before the first frame update
 
     void Start()
     {
+        if (simbolo !=null)
+        {
+            
+            Debug.Log("adios");
+            simbolo.SetActive(false);  
+        }
+        
+        //interrogacion.SetBool("Act", false);
         Ataque_Enemy = gameObject.GetComponent<Ataque_Enemy>();
         anima.SetBool("Caminar", false);
         anima.SetBool("Mirar", false);
@@ -96,6 +108,11 @@ public class EnemigoIA : MonoBehaviour
         {
             case 0:
                 // Esperar en lugar
+                if (visto)
+                {
+                    estadoActual = Estado.Sorprendido;
+                    animacionMirarCompletada = false;
+                }
                 break;
             case 1:
                 // Caminar en dirección aleatoria
@@ -117,6 +134,13 @@ public class EnemigoIA : MonoBehaviour
 
     private void EstadoSorprendido()
     {
+        if (simbolo !=null)
+        {
+            Debug.Log("Hola");
+            simbolo.SetActive(true);
+        }
+        
+        //interrogacion.SetBool("Act", true);
         agente.isStopped = true;
         anima.SetBool("Caminar", false);
         anima.SetBool("Mirar", true);
@@ -133,6 +157,7 @@ public class EnemigoIA : MonoBehaviour
         {
             // Usar un temporizador simple para simular el fin de la animación
             StartCoroutine(EsperarAnimacionMirar());
+            
         }
     }
 
@@ -145,8 +170,12 @@ public class EnemigoIA : MonoBehaviour
         estadoActual = Estado.Persiguiendo;
         agente.speed = vel_correr;
         if (agente.isActiveAndEnabled && agente.isOnNavMesh)
-        { 
+        {
             agente.isStopped = false;
+        }
+        if (simbolo)
+        {
+            simbolo.SetActive(false);
         }
     }
 
@@ -168,7 +197,7 @@ public class EnemigoIA : MonoBehaviour
         }
 
         // Determinar distancia de ataque según el tipo
-        float distanciaAtaque = (float)(tipo.tipo == 1 ? 3.5 : 4);
+        float distanciaAtaque = (float)(tipo.tipo == 1 ? 3 : 2);
 
         // Verificar si está en rango para atacar
         if (Vector3.Distance(transform.position, target.transform.position) <= distanciaAtaque)
@@ -203,7 +232,7 @@ public class EnemigoIA : MonoBehaviour
         lastAttackTime = Time.time;
 
         // Esperar un momento para que se complete la animación de ataque
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.2f);
 
         // Pasar a estado de recuperación
         estadoActual = Estado.Patrulla;

@@ -149,8 +149,8 @@ MonoBehaviour:
   aparecer_ataque: 0
   recuperar: 0
   tipo: {fileID: 1127124277891534896}
-  distanciaExpulsion: 4
-  duracionEmpuje: 0.5
+  distanciaExpulsion: 5.5
+  duracionEmpuje: 0.8
   vida_Enemy: {fileID: 0}
 --- !u!195 &4891986718533203290
 NavMeshAgent:
@@ -166,7 +166,7 @@ NavMeshAgent:
   m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 0.5
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

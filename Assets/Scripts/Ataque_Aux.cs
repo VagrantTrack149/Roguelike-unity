@@ -8,7 +8,7 @@ public class Ataque_Aux : MonoBehaviour
     public float count;
     public float fuerzaExpulsion=50;
     public GameObject player;
-    public float distanciaExpulsion = 10f; 
+    public float distanciaExpulsion = 5f; 
     public float duracionEmpuje = 0.5f;
     public Vida_enemy vida_Enemy;
     // Start is called before the first frame update

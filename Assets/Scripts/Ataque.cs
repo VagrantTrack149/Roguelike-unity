@@ -6,7 +6,7 @@ public class Ataque : MonoBehaviour
 {
     public GameObject arma;
     public GameObject player;
-    public float offsetDistance = 0.8f;
+    public float offsetDistance = 1.2f;
     public float count;
     public Controles controles;
     public Animator anima;
