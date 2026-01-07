@@ -147,7 +147,10 @@ public class PlayerMovement : MonoBehaviour
         speed = 0f;
         velocity = Vector3.zero;
         controller.enabled = false;
+        if (respawn != null)
+        {
         transform.position = respawn.transform.position;
+        }
         controller.enabled = true;
         speed = 10;
         muerte = false;
